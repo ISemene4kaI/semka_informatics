@@ -5,7 +5,6 @@
     <title>{{ filename }}</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
@@ -18,8 +17,53 @@
             color: #e2e8f0;
         }
 
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
         h2 {
-            margin-bottom: 20px;
+            margin: 0;
+            font-size: 20px;
+            word-break: break-word;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.15s ease;
+        }
+
+        .btn:hover {
+            background: #334155;
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
         }
 
         pre {
@@ -29,16 +73,18 @@
             overflow-x: auto;
             font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
+            border: 1px solid #334155;
         }
 
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
+        .back {
+            margin-top: 18px;
+        }
+
+        .back a {
             color: #3b82f6;
+            text-decoration: none;
         }
-
-        a:hover {
+        .back a:hover {
             text-decoration: underline;
         }
     </style>
@@ -46,15 +92,27 @@
 
 <body>
 
-<h2>📄 {{ filename }}</h2>
+<div class="topbar">
+    <h2>📄 {{ filename }}</h2>
 
-<pre>
-<code class="language-{{ language }}">
-{{ content | e }}
-</code>
-</pre>
+    <div class="actions">
+        <a class="btn btn-primary" href="/download/{{ filename }}">⬇ Скачать</a>
 
-<a href="/">← Назад</a>
+        <a class="btn"
+           href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
+           target="_blank" rel="noopener noreferrer">
+            ↗ GitHub
+        </a>
+
+        <a class="btn" href="/">← Главная</a>
+    </div>
+</div>
+
+<pre><code class="language-{{ language }}">{{ content | e }}</code></pre>
+
+<div class="back">
+    <a href="/">← Назад</a>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>

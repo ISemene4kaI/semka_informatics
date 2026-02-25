@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
 
@@ -52,7 +52,22 @@ def view_file(filename):
         content=content,
         language=extension
     )
+    
+@app.route("/download/<filename>")
+def download_file(filename):
+    if not is_allowed(filename):
+        abort(403)
 
+    file_path = os.path.join(CODE_DIR, filename)
+
+    # защита от выхода из директории
+    if not os.path.abspath(file_path).startswith(os.path.abspath(CODE_DIR)):
+        abort(403)
+
+    if not os.path.exists(file_path):
+        abort(404)
+
+    return send_from_directory(CODE_DIR, filename, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
