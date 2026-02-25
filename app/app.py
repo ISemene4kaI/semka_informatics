@@ -1,4 +1,6 @@
 import os
+import re
+from datetime import datetime
 from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
@@ -17,15 +19,45 @@ def is_allowed(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def make_display_title(filename: str) -> str:
+    name = filename.rsplit(".", 1)[0]  # без расширения
+
+    # 1part2 / 12part3 / 7part10
+    m = re.match(r"^(?P<work>\d+)(?:part(?P<part>\d+))?$", name, flags=re.IGNORECASE)
+    if m:
+        work = int(m.group("work"))
+        part = m.group("part")
+        if part is not None:
+            return f"Практическая работа {work} часть {int(part)}"
+        return f"Практическая работа {work}"
+
+    # fallback
+    return name
+
+
 @app.route("/")
 def index():
-    files = [
-        f for f in os.listdir(CODE_DIR)
-        if os.path.isfile(os.path.join(CODE_DIR, f))
-        and is_allowed(f)
-        and not f.startswith(".")
-    ]
-    return render_template("index.html", files=files)
+    entries = []
+    for f in os.listdir(CODE_DIR):
+        full = os.path.join(CODE_DIR, f)
+        if (
+            os.path.isfile(full)
+            and is_allowed(f)
+            and not f.startswith(".")
+        ):
+            mtime = os.path.getmtime(full)
+            entries.append({
+                "filename": f,
+                "ext": f.rsplit(".", 1)[1].lower(),
+                "title": make_display_title(f),
+                "mtime": datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
+                "mtime_ts": mtime,
+            })
+
+    # чтобы было красиво: сначала по номеру/части (примерно), затем по дате
+    entries.sort(key=lambda x: (x["title"], -x["mtime_ts"]))
+
+    return render_template("index.html", entries=entries)
 
 
 @app.route("/view/<filename>")
