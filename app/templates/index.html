@@ -1,31 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>My Informatics Works</title>
+    <title>Мои работы по информатике</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial;
-            max-width: 900px;
-            margin: 40px auto;
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 40px;
         }
-        a {
+
+        h1 {
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 14px;
+            transition: 0.2s ease;
             text-decoration: none;
+            color: #e2e8f0;
+            border: 1px solid #334155;
         }
-        li {
-            margin: 8px 0;
+
+        .card:hover {
+            transform: translateY(-4px);
+            background: #334155;
+            border-color: #3b82f6;
+        }
+
+        .filename {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .ext {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #94a3b8;
         }
     </style>
 </head>
 <body>
-    <h1>My Informatics Works</h1>
 
-    <ul>
-        {% for file in files %}
-            <li>
-                <a href="/view/{{ file }}">{{ file }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+<h1>📚 Мои работы по информатике</h1>
+
+<div class="grid">
+    {% for file in files %}
+        {% set ext = file.rsplit('.', 1)[1] %}
+        <a href="/view/{{ file }}" class="card">
+            <div class="filename">{{ file }}</div>
+            <div class="ext">Тип файла: {{ ext }}</div>
+        </a>
+    {% endfor %}
+</div>
+
 </body>
 </html>
