@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ filename }}</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+</head>
+
+<body style="max-width: 1000px; margin: 40px auto; font-family: Arial;">
+
+<h2>{{ filename }}</h2>
+
+<pre>
+<code class="language-{{ language }}">
+{{ content | e }}
+</code>
+</pre>
+
+<a href="/">← Back</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+    hljs.highlightAll();
+</script>
+
+</body>
+</html>

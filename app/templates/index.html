@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Informatics Works</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+        a {
+            text-decoration: none;
+        }
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Informatics Works</h1>
+
+    <ul>
+        {% for file in files %}
+            <li>
+                <a href="/view/{{ file }}">{{ file }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
