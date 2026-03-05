@@ -5,10 +5,13 @@
   <title>{{ filename }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
+  {% if is_markdown %}
   <link
+    id="hljsTheme"
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
   >
+  {% endif %}
 </head>
 <body>
   <div class="container">
@@ -20,7 +23,10 @@
           <span class="tag tag-{{ language }}">{{ language }}</span>
         </div>
       </div>
-      <div class="views">👁 {{ views }}</div>
+      <div class="file-header-right">
+        <div class="views">👁 {{ views }}</div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+      </div>
     </div>
 
     <div class="buttons">
@@ -43,11 +49,9 @@
     </div>
     {% else %}
     <div class="code-wrapper">
-      <pre class="code-pre">
-{% for line in lines %}
+      <pre class="code-pre">{% for line in lines -%}
 <span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
-{% endfor %}
-</pre>
+{%- endfor %}</pre>
     </div>
     {% endif %}
   </div>

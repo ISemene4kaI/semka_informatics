@@ -3,29 +3,35 @@
 }
 
 .code-pre {
-    background: #020617;
-    border: 1px solid #334155;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
     border-radius: 14px;
-    font-size: 14px;
-    line-height: 1.5;
+    color: var(--code-text);
+    font-family: var(--code-font);
+    font-size: 15px;
+    line-height: 1.55;
     overflow-x: auto;
     padding: 24px;
+    white-space: normal;
 }
 
 .line {
-    display: block;
-    white-space: pre;
+    align-items: baseline;
+    display: flex;
+    min-height: 1.55em;
 }
 
 .number {
-    color: #64748b;
-    display: inline-block;
-    padding-right: 12px;
+    color: var(--code-number);
+    flex: 0 0 52px;
+    font-variant-numeric: tabular-nums;
+    padding-right: 14px;
     text-align: right;
     user-select: none;
-    width: 40px;
 }
 
 .code {
-    color: #e2e8f0;
+    color: var(--code-text);
+    flex: 1 1 auto;
+    white-space: pre;
 }

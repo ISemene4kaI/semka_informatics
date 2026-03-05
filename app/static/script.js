@@ -1,8 +1,38 @@
-// Copy code
-const btn = document.getElementById("copyBtn")
+const THEME_KEY = "theme"
+const toggle = document.getElementById("themeToggle")
+const copyBtn = document.getElementById("copyBtn")
+const hljsTheme = document.getElementById("hljsTheme")
 
-if (btn) {
-    btn.onclick = () => {
+function applyTheme(theme) {
+    document.body.classList.toggle("light", theme === "light")
+
+    if (toggle) {
+        toggle.textContent = theme === "light" ? "☀️" : "🌙"
+    }
+
+    if (hljsTheme) {
+        hljsTheme.href = theme === "light"
+            ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+            : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    }
+}
+
+const savedTheme = localStorage.getItem(THEME_KEY)
+const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches
+const initialTheme = savedTheme || (prefersLight ? "light" : "dark")
+applyTheme(initialTheme)
+
+if (toggle) {
+    toggle.onclick = () => {
+        const nextTheme = document.body.classList.contains("light") ? "dark" : "light"
+        applyTheme(nextTheme)
+        localStorage.setItem(THEME_KEY, nextTheme)
+    }
+}
+
+// Copy code
+if (copyBtn) {
+    copyBtn.onclick = () => {
         let text = ""
 
         const codeLines = document.querySelectorAll(".code-pre .line .code")
@@ -14,24 +44,6 @@ if (btn) {
         }
 
         navigator.clipboard.writeText(text)
-        btn.innerText = "Copied!"
-    }
-}
-
-// Theme toggle
-const toggle = document.getElementById("themeToggle")
-
-if (toggle) {
-    toggle.onclick = () => {
-        document.body.classList.toggle("light")
-
-        localStorage.setItem(
-            "theme",
-            document.body.classList.contains("light") ? "light" : "dark"
-        )
-    }
-
-    if (localStorage.getItem("theme") === "light") {
-        document.body.classList.add("light")
+        copyBtn.textContent = "Copied!"
     }
 }

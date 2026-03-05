@@ -12,7 +12,10 @@
         <h1>📜 Последние обновления</h1>
         <p class="subtitle">Последние изменённые файлы</p>
       </div>
-      <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+      <div class="hero-actions">
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+        <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+      </div>
     </header>
 
     <div class="updates-list">
