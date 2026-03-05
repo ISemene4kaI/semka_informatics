@@ -3,14 +3,23 @@ pre{
     padding:20px;
     border-radius:12px;
     overflow:auto;
+    border:1px solid #334155;
+    font-size:14px;
+    line-height:1.5;
 }
 
 .line{
     display:block;
+    white-space:pre;
 }
 
 .number{
     display:inline-block;
     width:40px;
     color:#64748b;
+    user-select:none;
+}
+
+.code{
+    color:#e2e8f0;
 }

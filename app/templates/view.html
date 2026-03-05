@@ -13,9 +13,6 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
-
 </head>
 
 <body>
@@ -43,7 +40,7 @@ GitHub
 
 </a>
 
-<button id="copyBtn">Copy code</button>
+<button class="btn" id="copyBtn">Copy code</button>
 
 </div>
 
@@ -58,24 +55,22 @@ GitHub
 
 {% else %}
 
-<pre>
+<pre><code class="language-{{ language }}">
 
 {% for line in lines %}
-
-<span class="line">
-
-<span class="number">{{ loop.index }}</span>
-
-<span class="code">{{ line | e }}</span>
-
-</span>
-
+<span class="line"><span class="number">{{ loop.index }}</span>{{ line | e }}</span>
 {% endfor %}
 
-</pre>
+</code></pre>
 
 {% endif %}
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script>
+hljs.highlightAll();
+</script>
 
 <script src="{{ url_for('static',filename='script.js') }}"></script>
 

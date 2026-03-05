@@ -1,20 +1,40 @@
 body{
     background:#0f172a;
-    color:white;
-    font-family:Inter;
+    color:#e2e8f0;
+    font-family:Inter,system-ui;
+    margin:0;
     padding:40px;
+}
+
+a{
+    color:#e2e8f0;
+    text-decoration:none;
+}
+
+a:visited{
+    color:#e2e8f0;
 }
 
 header{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    margin-bottom:20px;
+}
+
+h1{
+    margin:0;
+}
+
+h2{
+    margin-top:40px;
 }
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
     gap:16px;
+    margin-top:10px;
 }
 
 .card{
@@ -23,18 +43,51 @@ header{
     border-radius:12px;
     border:1px solid #334155;
     transition:0.2s;
+    display:block;
 }
 
 .card:hover{
     transform:translateY(-4px);
     border-color:#3b82f6;
+    background:#263548;
+}
+
+.title{
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.meta{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+footer{
+    margin-top:40px;
+    color:#94a3b8;
+}
+
+.stats{
+    margin-bottom:20px;
+}
+
+.latest ul{
+    padding-left:20px;
 }
 
 .btn{
     background:#1e293b;
-    padding:8px 12px;
+    padding:8px 14px;
     border-radius:8px;
-    text-decoration:none;
-    color:white;
     border:1px solid #334155;
+    cursor:pointer;
+    margin-right:8px;
+}
+
+.btn:hover{
+    border-color:#3b82f6;
+}
+
+.buttons{
+    margin-bottom:20px;
 }
