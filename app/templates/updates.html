@@ -1,87 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
-<meta charset="UTF-8">
-<title>Последние обновления</title>
-
-<link rel="stylesheet"
-href="{{ url_for('static', filename='style.css') }}">
-
+  <meta charset="UTF-8">
+  <title>Последние обновления</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
+  <div class="container">
+    <header class="hero">
+      <div>
+        <h1>📜 Последние обновления</h1>
+        <p class="subtitle">Последние изменённые файлы</p>
+      </div>
+      <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+    </header>
 
-<div class="container">
-
-<header class="hero">
-
-<div>
-
-<h1>📜 Последние обновления</h1>
-
-<p class="subtitle">
-Последние изменённые файлы
-</p>
-
-</div>
-
-<a class="btn btn-back" href="/">
-← Назад
-</a>
-
-</header>
-
-
-<div class="updates-list">
-
-{% for file in latest %}
-
-<div class="update-card">
-
-<div class="update-left">
-
-<div class="update-title">
-
-{{ file.icon }} {{ file.title }}
-
-</div>
-
-<div class="update-meta">
-
-<span class="tag tag-{{ file.ext }}">
-{{ file.ext }}
-</span>
-
-<span class="date">
-🕒 {{ file.mtime }}
-</span>
-
-<span class="update-file">
-Название файла: {{ file.filename }}
-</span>
-
-</div>
-
-</div>
-
-
-<a class="btn btn-open"
-href="/view/{{ file.filename }}">
-
-Открыть →
-
-</a>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</div>
-
+    <div class="updates-list">
+      {% for file in latest %}
+      <div class="update-card">
+        <div class="update-left">
+          <div class="update-title">{{ file.icon }} {{ file.title }}</div>
+          <div class="update-meta">
+            <span class="tag tag-{{ file.ext }}">{{ file.ext }}</span>
+            <span class="date">🕒 {{ file.mtime }}</span>
+            <span class="update-file">Название файла: {{ file.filename }}</span>
+          </div>
+        </div>
+        <a class="btn btn-open" href="{{ url_for('view_file', filename=file.filename) }}">
+          Открыть →
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </body>
-
 </html>

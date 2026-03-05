@@ -1,110 +1,61 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
-<meta charset="UTF-8">
-<title>{{ filename }}</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-
+  <meta charset="UTF-8">
+  <title>{{ filename }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+  >
 </head>
-
 <body>
+  <div class="container">
+    <div class="file-header">
+      <div>
+        <h1>{{ title }}</h1>
+        <div class="file-name">{{ filename }}</div>
+        <div class="tags">
+          <span class="tag tag-{{ language }}">{{ language }}</span>
+        </div>
+      </div>
+      <div class="views">👁 {{ views }}</div>
+    </div>
 
-<div class="container">
+    <div class="buttons">
+      <a class="btn btn-download" href="{{ url_for('download', filename=filename) }}">⬇ Скачать</a>
+      <a
+        class="btn btn-github"
+        href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      <button class="btn btn-copy" id="copyBtn">📋 Copy</button>
+      <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+    </div>
 
-<div class="file-header">
-
-<div>
-
-<h1>{{ title }}</h1>
-
-<div class="file-name">
-{{ filename }}
-</div>
-
-<div class="tags">
-<span class="tag tag-{{ language }}">
-{{ language }}
-</span>
-</div>
-
-</div>
-
-<div class="views">
-👁 {{ views }}
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<a class="btn btn-download"
-href="/download/{{ filename }}">
-⬇ Скачать
-</a>
-
-<a class="btn btn-github"
-href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
-target="_blank">
-GitHub
-</a>
-
-<button class="btn btn-copy" id="copyBtn">
-📋 Copy
-</button>
-
-<a class="btn btn-back"
-href="/">
-← Назад
-</a>
-
-</div>
-
-
-{% if is_markdown %}
-
-<div class="markdown-body markdown-container">
-
-{{ markdown | safe }}
-
-</div>
-
-{% else %}
-
-<div class="code-wrapper">
-
-<pre class="code-pre"><code class="language-{{ language }}">
-
+    {% if is_markdown %}
+    <div class="markdown-body markdown-container">
+      {{ markdown | safe }}
+    </div>
+    {% else %}
+    <div class="code-wrapper">
+      <pre class="code-pre"><code class="language-{{ language }}">
 {% for line in lines %}
-<span class="line">
-<span class="number">{{ loop.index }}</span>
-<span class="code">{{ line | e }}</span>
-</span>
+<span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
 {% endfor %}
-
 </code></pre>
+    </div>
+    {% endif %}
+  </div>
 
-</div>
-
-{% endif %}
-
-</div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-<script>
-hljs.highlightAll();
-</script>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

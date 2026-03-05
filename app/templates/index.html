@@ -1,86 +1,51 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Semka Informatics</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Semka Informatics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
+  <div class="container">
+    <header class="hero">
+      <div>
+        <h1>Semka Informatics</h1>
+        <p class="subtitle">Практические работы по программированию</p>
+        <div class="hero-stats">📚 Всего работ: {{ total }}</div>
+      </div>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </header>
 
-    <div class="container">
-
-        <header class="hero">
-
-            <div>
-                <h1>Semka Informatics</h1>
-                <p class="subtitle">Практические работы по программированию</p>
-
-                <div class="hero-stats">
-                    📚 Всего работ: {{ total }}
-                </div>
-            </div>
-
-            <button id="themeToggle" class="theme-toggle">🌙</button>
-
-        </header>
-
-
-        <div class="updates-link">
-            <a href="/updates">📜 Последние обновления →</a>
-        </div>
-
-
-        {% for work, files in works.items() %}
-
-            <section class="work">
-
-                <h2>📘 Практическая работа {{ work }}</h2>
-
-                <div class="grid">
-
-                    {% for f in files %}
-
-                        <a class="card" href="/view/{{ f.filename }}">
-
-                            <div class="card-title">
-                                {{ f.icon }} {{ f.title }}
-                            </div>
-
-                            <div class="tags">
-                                <span class="tag tag-{{ f.ext }}">{{ f.ext }}</span>
-                            </div>
-
-                            <div class="card-meta">
-                                Название файла: {{ f.filename }}
-                            </div>
-
-                            <div class="card-date">
-                                🕒 {{ f.mtime }}
-                            </div>
-
-                        </a>
-
-                    {% endfor %}
-
-                </div>
-
-            </section>
-
-        {% endfor %}
-
-
-        <footer>
-            <div class="footer-inner">
-                <div>© ISemene4kaI</div>
-                <div>Semka Informatics</div>
-            </div>
-        </footer>
-
+    <div class="updates-link">
+      <a href="{{ url_for('updates') }}">📜 Последние обновления →</a>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% for work, files in works.items() %}
+    <section class="work">
+      <h2>📘 Практическая работа {{ work }}</h2>
+      <div class="grid">
+        {% for f in files %}
+        <a class="card" href="{{ url_for('view_file', filename=f.filename) }}">
+          <div class="card-title">{{ f.icon }} {{ f.title }}</div>
+          <div class="tags">
+            <span class="tag tag-{{ f.ext }}">{{ f.ext }}</span>
+          </div>
+          <div class="card-meta">Название файла: {{ f.filename }}</div>
+          <div class="card-date">🕒 {{ f.mtime }}</div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
 
+    <footer>
+      <div class="footer-inner">
+        <div>© ISemene4kaI</div>
+        <div>Semka Informatics</div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

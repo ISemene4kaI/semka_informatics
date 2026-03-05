@@ -1,29 +1,29 @@
-.code-wrapper{
-    margin-top:20px;
+.code-wrapper {
+    margin-top: 20px;
 }
 
-.code-pre{
-    background:#020617;
-    border-radius:14px;
-    border:1px solid #334155;
-    padding:24px;
-    overflow-x:auto;
-    font-size:14px;
-    line-height:1.5;
+.code-pre {
+    background: #020617;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: auto;
+    padding: 24px;
 }
 
-.line{
-    display:block;
-    white-space:pre;
+.line {
+    display: block;
+    white-space: pre;
 }
 
-.number{
-    display:inline-block;
-    width:40px;
-    color:#64748b;
-    user-select:none;
+.number {
+    color: #64748b;
+    display: inline-block;
+    user-select: none;
+    width: 40px;
 }
 
-.code{
-    color:#e2e8f0;
+.code {
+    color: #e2e8f0;
 }
