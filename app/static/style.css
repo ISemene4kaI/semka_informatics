@@ -166,3 +166,78 @@ footer{
     justify-content:space-between;
     color:#64748b;
 }
+
+/* language tags */
+
+.tags{
+    margin-top:6px;
+}
+
+.tag{
+    display:inline-block;
+    padding:3px 8px;
+    border-radius:6px;
+    font-size:11px;
+    text-transform:uppercase;
+    font-weight:600;
+}
+
+.tag-py{
+    background:#1e40af;
+}
+
+.tag-md{
+    background:#374151;
+}
+
+.tag-js{
+    background:#ca8a04;
+}
+
+.tag-html{
+    background:#ea580c;
+}
+
+.tag-css{
+    background:#0284c7;
+}
+
+.tag-json{
+    background:#9333ea;
+}
+
+.tag-cpp{
+    background:#0f766e;
+}
+
+.tag-txt{
+    background:#475569;
+}
+
+/* updates page */
+
+.updates-list{
+    display:grid;
+    gap:16px;
+}
+
+.update-card{
+    background:#1e293b;
+    padding:16px;
+    border-radius:12px;
+    border:1px solid #334155;
+}
+
+.update-title{
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.update-meta{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+.date{
+    margin-left:10px;
+}

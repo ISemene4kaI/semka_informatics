@@ -81,6 +81,35 @@ def read_text_file_limited(path):
     with open(path,"r",encoding="utf-8",errors="replace") as f:
         return f.read()
 
+def get_latest_files():
+
+    files = []
+
+    for f in os.listdir(CODE_DIR):
+
+        if not is_allowed(f):
+            continue
+
+        path = os.path.join(CODE_DIR,f)
+
+        ext = f.split(".")[-1]
+
+        mtime = os.path.getmtime(path)
+
+        work,part,title = parse_filename(f)
+
+        files.append({
+            "filename":f,
+            "title":title,
+            "icon":LANG_ICONS.get(ext,"📄"),
+            "ext":ext,
+            "mtime":datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
+            "mtime_raw":mtime
+        })
+
+    files.sort(key=lambda x: x["mtime_raw"], reverse=True)
+
+    return files[:10]
 
 def load_views():
 
@@ -152,7 +181,6 @@ def parse_filename(filename):
 def index():
 
     works = {}
-    latest = []
     total = 0
 
     for f in os.listdir(CODE_DIR):
@@ -160,20 +188,20 @@ def index():
         if not is_allowed(f):
             continue
 
-        path = os.path.join(CODE_DIR,f)
+        path = os.path.join(CODE_DIR, f)
 
-        work,part,title = parse_filename(f)
+        work, part, title = parse_filename(f)
 
         ext = f.split(".")[-1]
 
         mtime = os.path.getmtime(path)
 
         entry = {
-            "filename":f,
-            "title":title,
-            "icon":LANG_ICONS.get(ext,"📄"),
-            "mtime":datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
-            "mtime_raw":mtime
+            "filename": f,
+            "title": title,
+            "icon": LANG_ICONS.get(ext, "📄"),
+            "ext": ext,
+            "mtime": datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
         }
 
         if work not in works:
@@ -181,11 +209,9 @@ def index():
 
         works[work].append(entry)
 
-        latest.append(entry)
-
         total += 1
 
-    latest = sorted(latest,key=lambda x:x["mtime_raw"],reverse=True)[:5]
+    latest = get_latest_files()[:5]
 
     return render_template(
         "index.html",
@@ -262,6 +288,16 @@ def download(filename):
         CODE_DIR,
         os.path.basename(path),
         as_attachment=True
+    )
+    
+@app.route("/updates")
+def updates():
+
+    latest_files = get_latest_files()
+
+    return render_template(
+        "updates.html",
+        latest=latest_files
     )
 
 
