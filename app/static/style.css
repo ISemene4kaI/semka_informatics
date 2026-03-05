@@ -34,9 +34,11 @@
     --code-text: #e2e8f0;
     --code-number: #64748b;
 
-    --island-1: #22d3ee;
-    --island-2: #3b82f6;
-    --island-shadow: 0 0 28px rgba(56, 189, 248, 0.45);
+    --island-core: #0f1f3c;
+    --island-core-2: #12284f;
+    --island-border: #355b95;
+    --island-sheen: rgba(96, 165, 250, 0.55);
+    --island-glow: 0 8px 24px rgba(59, 130, 246, 0.25);
 }
 
 body.light {
@@ -71,9 +73,11 @@ body.light {
     --code-text: #0f172a;
     --code-number: #64748b;
 
-    --island-1: #60a5fa;
-    --island-2: #22d3ee;
-    --island-shadow: 0 0 30px rgba(59, 130, 246, 0.35);
+    --island-core: #dbeafe;
+    --island-core-2: #c7dbff;
+    --island-border: #93c5fd;
+    --island-sheen: rgba(37, 99, 235, 0.35);
+    --island-glow: 0 8px 20px rgba(59, 130, 246, 0.2);
 }
 
 /* ========================================
@@ -168,20 +172,37 @@ a {
    ISLANDS
 ======================================== */
 .island {
-    background: linear-gradient(90deg, var(--island-1), var(--island-2), var(--island-1));
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 45%),
+        linear-gradient(180deg, var(--island-core), var(--island-core-2));
+    border: 1px solid var(--island-border);
     border-radius: 999px;
-    box-shadow: var(--island-shadow);
-    height: 8px;
+    box-shadow: var(--island-glow), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    height: 18px;
+    overflow: hidden;
+    position: relative;
+}
+
+.island::before {
+    background: linear-gradient(90deg, transparent, var(--island-sheen), transparent);
+    border-radius: 999px;
+    content: "";
+    height: 5px;
+    left: 12%;
+    position: absolute;
+    right: 12%;
+    top: 4px;
 }
 
 .island-top {
     margin: -2px 0 24px;
-    width: min(240px, 70%);
+    width: min(240px, 66%);
 }
 
 .island-bottom {
+    height: 16px;
     margin: 8px auto 16px;
-    width: min(360px, 100%);
+    width: min(380px, 100%);
 }
 
 /* ========================================
@@ -467,6 +488,10 @@ footer {
     }
 
     .island-top {
-        width: min(180px, 80%);
+        width: min(210px, 80%);
+    }
+
+    .island-bottom {
+        width: min(260px, 90%);
     }
 }
