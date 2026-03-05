@@ -2,60 +2,86 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Последние обновления</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<meta charset="UTF-8">
+<title>Последние обновления</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header class="hero">
+<header class="hero">
 
-            <div>
-                <h1>📜 Последние обновления</h1>
-                <p class="subtitle">Последние добавленные или изменённые файлы</p>
-            </div>
+<div>
 
-            <a class="btn btn-back" href="/">← Назад</a>
+<h1>📜 Последние обновления</h1>
 
-        </header>
+<p class="subtitle">
+Последние изменённые файлы
+</p>
+
+</div>
+
+<a class="btn btn-back" href="/">
+← Назад
+</a>
+
+</header>
 
 
-        <div class="updates-list">
+<div class="updates-list">
 
-            {% for file in latest %}
+{% for file in latest %}
 
-                <a class="update-card" href="/view/{{ file.filename }}">
+<div class="update-card">
 
-                    <div class="update-title">
-                        {{ file.icon }} {{ file.title }}
-                    </div>
+<div class="update-left">
 
-                    <div class="update-meta">
+<div class="update-title">
 
-                        <span class="tag tag-{{ file.ext }}">
-                            {{ file.ext }}
-                        </span>
+{{ file.icon }} {{ file.title }}
 
-                        <span class="date">
-                            🕒 {{ file.mtime }}
-                        </span>
+</div>
 
-                        <span class="update-filename">
-                            • Название файла: {{ file.filename }}
-                        </span>
+<div class="update-meta">
 
-                    </div>
+<span class="tag tag-{{ file.ext }}">
+{{ file.ext }}
+</span>
 
-                </a>
+<span class="date">
+🕒 {{ file.mtime }}
+</span>
 
-            {% endfor %}
+<span class="update-file">
+Название файла: {{ file.filename }}
+</span>
 
-        </div>
+</div>
 
-    </div>
+</div>
+
+
+<a class="btn btn-open"
+href="/view/{{ file.filename }}">
+
+Открыть →
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
 
 </body>
+
 </html>

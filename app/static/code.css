@@ -1,36 +1,29 @@
-.code-wrapper {
-    margin-top: 16px;
+.code-wrapper{
+    margin-top:20px;
 }
 
-.code-pre {
-    background: #020617;
-    border-radius: 14px;
-    border: 1px solid #334155;
-    padding: 24px;
-    overflow: auto;
-    font-size: 14px;
-    line-height: 1.35; /* плотнее, без "воздуха" */
+.code-pre{
+    background:#020617;
+    border-radius:14px;
+    border:1px solid #334155;
+    padding:24px;
+    overflow-x:auto;
+    font-size:14px;
+    line-height:1.5;
 }
 
-.code-lines {
-    display: block;
+.line{
+    display:block;
+    white-space:pre;
 }
 
-.line {
-    display: block;
-    white-space: pre;
-    line-height: 1.35; /* важно */
-    margin: 0;         /* важно */
-    padding: 0;        /* важно */
+.number{
+    display:inline-block;
+    width:40px;
+    color:#64748b;
+    user-select:none;
 }
 
-.number {
-    display: inline-block;
-    width: 40px;
-    color: #64748b;
-    user-select: none;
-}
-
-.code {
-    color: #e2e8f0;
+.code{
+    color:#e2e8f0;
 }
