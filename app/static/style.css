@@ -129,6 +129,25 @@ a {
     margin-bottom: 30px;
 }
 
+.hero-island {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 50%),
+        var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 20px;
+    box-shadow: 0 10px 24px rgba(2, 6, 23, 0.25);
+    margin-bottom: 24px;
+    padding: 20px 22px;
+}
+
+body.light .hero-island {
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.12);
+}
+
+.hero-copy {
+    min-width: 0;
+}
+
 .hero h1 {
     font-size: 32px;
     font-weight: 700;
@@ -446,6 +465,21 @@ footer {
     justify-content: space-between;
 }
 
+.footer-repo {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.footer-link {
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-color: rgba(96, 165, 250, 0.45);
+    text-underline-offset: 2px;
+}
+
 /* ========================================
    MARKDOWN
 ======================================== */
@@ -464,6 +498,11 @@ footer {
         align-items: flex-start;
         flex-direction: column;
         gap: 10px;
+    }
+
+    .hero-island {
+        border-radius: 16px;
+        padding: 16px;
     }
 
     .file-header {
@@ -485,6 +524,12 @@ footer {
     .footer-inner {
         flex-direction: column;
         gap: 6px;
+    }
+
+    .footer-repo {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
     }
 
     .island-top {
