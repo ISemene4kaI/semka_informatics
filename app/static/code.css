@@ -20,6 +20,8 @@
 .number {
     color: #64748b;
     display: inline-block;
+    padding-right: 12px;
+    text-align: right;
     user-select: none;
     width: 40px;
 }

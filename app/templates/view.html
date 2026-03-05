@@ -43,19 +43,21 @@
     </div>
     {% else %}
     <div class="code-wrapper">
-      <pre class="code-pre"><code class="language-{{ language }}">
+      <pre class="code-pre">
 {% for line in lines %}
 <span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
 {% endfor %}
-</code></pre>
+</pre>
     </div>
     {% endif %}
   </div>
 
+  {% if is_markdown %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
     hljs.highlightAll();
   </script>
+  {% endif %}
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
