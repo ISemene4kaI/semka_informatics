@@ -2,106 +2,76 @@
 <html lang="ru">
 
 <head>
+    <meta charset="UTF-8">
+    <title>{{ filename }}</title>
 
-<meta charset="UTF-8">
-<title>{{ filename }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<div class="file-header">
+        <div class="file-header">
 
-<div>
+            <div>
+                <h1>{{ title }}</h1>
+                <div class="file-name">{{ filename }}</div>
 
-<h1>{{ title }}</h1>
-<div class="file-name">{{ filename }}</div>
+                <div class="tags">
+                    <span class="tag tag-{{ language }}">{{ language }}</span>
+                </div>
+            </div>
 
-<div class="tags">
+            <div class="views">
+                👁 {{ views }}
+            </div>
 
-<span class="tag tag-{{ language }}">
-{{ language }}
-</span>
-
-</div>
-
-</div>
-
-<div class="views">
-👁 {{ views }}
-</div>
-
-</div>
+        </div>
 
 
-<div class="buttons">
+        <div class="buttons">
 
-<a class="btn btn-download"
-href="/download/{{ filename }}">
-⬇ Скачать
-</a>
+            <a class="btn btn-download" href="/download/{{ filename }}">⬇ Скачать</a>
 
-<a class="btn btn-github"
-href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
-target="_blank">
-GitHub
-</a>
+            <a class="btn btn-github"
+               href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
+               target="_blank">GitHub</a>
 
-<button class="btn btn-copy" id="copyBtn">
-📋 Copy
-</button>
+            <button class="btn btn-copy" id="copyBtn">📋 Copy</button>
 
-<a class="btn btn-back" href="/">
-← Назад
-</a>
+            <a class="btn btn-back" href="/">← Назад</a>
 
-</div>
+        </div>
 
 
-{% if is_markdown %}
+        {% if is_markdown %}
 
-<div class="markdown-body markdown-container">
+            <div class="markdown-body markdown-container">
+                {{ markdown | safe }}
+            </div>
 
-{{ markdown | safe }}
+        {% else %}
 
-</div>
+            <div class="code-wrapper">
+                <pre class="code-pre"><code class="code-lines language-{{ language }}">{% for line in lines -%}
+<span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
+{%- endfor %}</code></pre>
+            </div>
 
-{% else %}
+        {% endif %}
 
-<div class="code-wrapper">
-
-<pre><code class="language-{{ language }}">
-
-{% for line in lines %}
-<span class="line">
-<span class="number">{{ loop.index }}</span>{{ line | e }}
-</span>
-{% endfor %}
-
-</code></pre>
-
-</div>
-
-{% endif %}
-
-</div>
+    </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 
-<script>
-hljs.highlightAll();
-</script>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>
