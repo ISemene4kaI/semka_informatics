@@ -1,31 +1,25 @@
-.code-container{
-    max-width:1100px;
-    margin:auto;
-    padding:0 24px 40px 24px;
+.code-wrapper {
+    margin-top: 20px;
 }
 
-pre{
-    background:#020617;
-    border-radius:14px;
-    border:1px solid #334155;
-    padding:24px;
-    overflow:auto;
-    font-size:14px;
-    line-height:1.6;
+pre {
+    background: #020617;
+    border-radius: 14px;
+    border: 1px solid #334155;
+    padding: 24px;
+    overflow: auto;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-.line{
-    display:block;
-    white-space:pre;
+.line {
+    display: block;
+    white-space: pre;
 }
 
-.number{
-    display:inline-block;
-    width:40px;
-    color:#64748b;
-    user-select:none;
-}
-
-.code{
-    color:#e2e8f0;
+.number {
+    display: inline-block;
+    width: 40px;
+    color: #64748b;
+    user-select: none;
 }
