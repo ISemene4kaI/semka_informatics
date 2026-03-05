@@ -12,85 +12,97 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header class="header">
+<header class="hero">
 
-            <div>
+    <div class="hero-left">
 
-                <h1>Semka Informatics</h1>
-                <p class="subtitle">Практические работы по программированию</p>
+        <h1>Semka Informatics</h1>
+        <p>Практические работы по программированию</p>
 
-            </div>
-
-            <button id="themeToggle" class="theme-btn">
-                🌙
-            </button>
-
-        </header>
-
-
-        <div class="stats">
-            Всего работ: {{ total }}
+        <div class="hero-stats">
+            📚 Всего работ: {{ total }}
         </div>
-
-
-        <section class="latest">
-
-            <h2>Последние обновления</h2>
-
-            <ul>
-
-                {% for f in latest %}
-                    <li>{{ f.title }}</li>
-                {% endfor %}
-
-            </ul>
-
-        </section>
-
-
-        {% for work, files in works.items() %}
-
-            <section class="work">
-
-                <h2>Практическая работа {{ work }}</h2>
-
-                <div class="grid">
-
-                    {% for f in files %}
-
-                        <a class="card" href="/view/{{ f.filename }}">
-
-                            <div class="card-title">
-                                <span class="icon">{{ f.icon }}</span>
-                                {{ f.title }}
-                            </div>
-
-                            <div class="card-meta">
-                                {{ f.filename }} <br>
-                                {{ f.mtime }}
-                            </div>
-
-                        </a>
-
-                    {% endfor %}
-
-                </div>
-
-            </section>
-
-        {% endfor %}
-
-
-        <footer>
-            © ISemene4kaI
-        </footer>
 
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <button id="themeToggle" class="theme-toggle">
+        ☾
+    </button>
+
+</header>
+
+
+<div class="updates-link">
+
+    <a href="/updates">
+        📜 Последние обновления →
+    </a>
+
+</div>
+
+
+{% for work, files in works.items() %}
+
+<section class="work">
+
+<h2>📘 Практическая работа {{ work }}</h2>
+
+<div class="grid">
+
+{% for f in files %}
+
+<a class="card" href="/view/{{ f.filename }}">
+
+    <div class="card-title">
+
+        {{ f.icon }} {{ f.title }}
+
+    </div>
+
+    <div class="card-meta">
+
+        {{ f.filename }}
+
+    </div>
+
+    <div class="card-date">
+
+        🕒 {{ f.mtime }}
+
+    </div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+{% endfor %}
+
+
+<footer>
+
+<div class="footer-inner">
+
+    <div>
+        © ISemene4kaI
+    </div>
+
+    <div class="footer-links">
+        🧠 Semka Informatics
+    </div>
+
+</div>
+
+</footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
-
 </html>
