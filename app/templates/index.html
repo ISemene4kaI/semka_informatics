@@ -1,135 +1,96 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>Мои работы по информатике</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body{
-      font-family:'Inter',sans-serif;
-      background:#0f172a;
-      color:#e2e8f0;
-      margin:0;
-      padding:40px;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
 
-    h1{ font-weight:600; margin:0 0 24px 0; }
+<meta charset="UTF-8">
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-      gap:16px;
+<title>Semka Informatics</title>
 
-      /* ключевое: не растягивать треки по высоте */
-      align-content:start;
-      align-items:start;
-    }
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
 
-    .card{
-      background:#1e293b;
-      padding:16px 16px 14px;
-      border-radius:14px;
-      border:1px solid #334155;
-      transition:.2s ease;
-      text-decoration:none;
-      color:#e2e8f0;
-
-      /* чтобы точно не тянулось */
-      align-self:start;
-    }
-
-    .card:hover{
-      transform:translateY(-3px);
-      background:#334155;
-      border-color:#3b82f6;
-    }
-
-    .title{
-      font-weight:600;
-      font-size:16px;
-      line-height:1.25;
-      margin-bottom:8px;
-      word-break:break-word;
-    }
-
-    .meta{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      color:#94a3b8;
-      font-size:13px;
-    }
-
-    .pillrow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    .pill{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#0b1220;
-      border:1px solid #1f2a44;
-      color:#cbd5e1;
-    }
-
-    footer{
-      margin-top:28px;
-      padding:16px 18px;
-      border-radius:14px;
-      background:#0b1220;
-      border:1px solid #1f2a44;
-      color:#94a3b8;
-      font-size:13px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    footer a{ color:#3b82f6; text-decoration:none; }
-    footer a:hover{ text-decoration:underline; }
-  </style>
 </head>
+
 <body>
 
-<h1>📚 Мои работы по информатике</h1>
+<header>
+
+<h1>Semka Informatics</h1>
+
+<p>Практические работы по программированию</p>
+
+<button id="themeToggle">🌙</button>
+
+</header>
+
+
+<section class="stats">
+
+Всего работ: {{ total }}
+
+</section>
+
+
+<section class="latest">
+
+<h2>Последние обновления</h2>
+
+<ul>
+
+{% for f in latest %}
+
+<li>{{ f.title }}</li>
+
+{% endfor %}
+
+</ul>
+
+</section>
+
+
+{% for work,files in works.items() %}
+
+<h2>Практическая работа {{ work }}</h2>
 
 <div class="grid">
-  {% for e in entries %}
-    <a href="/view/{{ e.filename }}" class="card">
-      <div class="title">{{ e.title }}</div>
 
-      <div class="meta">
-        <div>Файл: {{ e.filename }}</div>
-        <div>Изменён: {{ e.mtime }}</div>
-      </div>
+{% for f in files %}
 
-      <div class="pillrow">
-        <span class="pill">Тип: {{ e.ext }}</span>
-      </div>
-    </a>
-  {% endfor %}
+<a class="card" href="/view/{{ f.filename }}">
+
+<div class="title">
+
+{{ f.icon }} {{ f.title }}
+
 </div>
 
+<div class="meta">
+
+{{ f.filename }}
+
+<br>
+
+{{ f.mtime }}
+
+</div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+{% endfor %}
+
+
 <footer>
-  <div>© <span id="year"></span> ISemene4kaI • Semka Informatics</div>
-  <div>
-    Repo:
-    <a href="https://github.com/ISemene4kaI/semka_informatics" target="_blank" rel="noopener noreferrer">
-      github.com/ISemene4kaI/semka_informatics
-    </a>
-  </div>
+
+© ISemene4kaI
+
 </footer>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
+
 </html>

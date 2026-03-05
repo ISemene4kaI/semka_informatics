@@ -1,123 +1,84 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>{{ filename }}</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<meta charset="UTF-8">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 40px;
-            background: #0f172a;
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
-        }
+<title>{{ filename }}</title>
 
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-        }
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='code.css') }}">
 
-        h2 {
-            margin: 0;
-            font-size: 20px;
-            word-break: break-word;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
 
-        .btn {
-            display: inline-block;
-            padding: 10px 12px;
-            border-radius: 12px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #e2e8f0;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.15s ease;
-        }
-
-        .btn:hover {
-            background: #334155;
-            border-color: #3b82f6;
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            border-color: #2563eb;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-            border-color: #1d4ed8;
-        }
-
-        pre {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 14px;
-            overflow-x: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            border: 1px solid #334155;
-        }
-
-        .back {
-            margin-top: 18px;
-        }
-
-        .back a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-        .back a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 
 <body>
 
 <div class="topbar">
-    <h2>📄 {{ filename }}</h2>
 
-    <div class="actions">
-        <a class="btn btn-primary" href="/download/{{ filename }}">⬇ Скачать</a>
+<h2>{{ filename }}</h2>
 
-        <a class="btn"
-           href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
-           target="_blank" rel="noopener noreferrer">
-            ↗ GitHub
-        </a>
-
-        <a class="btn" href="/">← Главная</a>
-    </div>
+<div>
+Просмотров: {{ views }}
 </div>
 
-<pre><code class="language-{{ language }}">{{ content | e }}</code></pre>
-
-<div class="back">
-    <a href="/">← Назад</a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script>
-    hljs.highlightAll();
-</script>
+
+<div class="buttons">
+
+<a class="btn" href="/download/{{ filename }}">⬇ Скачать</a>
+
+<a class="btn"
+href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
+target="_blank">
+
+GitHub
+
+</a>
+
+<button id="copyBtn">Copy code</button>
+
+</div>
+
+
+{% if is_markdown %}
+
+<div class="markdown-body">
+
+{{ markdown | safe }}
+
+</div>
+
+{% else %}
+
+<pre>
+
+{% for line in lines %}
+
+<span class="line">
+
+<span class="number">{{ loop.index }}</span>
+
+<span class="code">{{ line | e }}</span>
+
+</span>
+
+{% endfor %}
+
+</pre>
+
+{% endif %}
+
+
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
+
 </html>

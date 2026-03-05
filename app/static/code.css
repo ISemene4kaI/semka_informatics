@@ -1,0 +1,16 @@
+pre{
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    overflow:auto;
+}
+
+.line{
+    display:block;
+}
+
+.number{
+    display:inline-block;
+    width:40px;
+    color:#64748b;
+}
