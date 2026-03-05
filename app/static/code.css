@@ -1,11 +1,17 @@
+.code-container{
+    max-width:1100px;
+    margin:auto;
+    padding:0 24px 40px 24px;
+}
+
 pre{
-    background:#1e293b;
-    padding:20px;
-    border-radius:12px;
-    overflow:auto;
+    background:#020617;
+    border-radius:14px;
     border:1px solid #334155;
+    padding:24px;
+    overflow:auto;
     font-size:14px;
-    line-height:1.5;
+    line-height:1.6;
 }
 
 .line{

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
 
 <meta charset="UTF-8">
-
 <title>{{ filename }}</title>
 
-<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',filename='code.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
 
 </head>
 
@@ -30,7 +32,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 
 <div class="buttons">
 
-<a class="btn" href="/download/{{ filename }}">⬇ Скачать</a>
+<a class="btn" href="/download/{{ filename }}">
+⬇ Скачать
+</a>
 
 <a class="btn"
 href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
@@ -40,12 +44,20 @@ GitHub
 
 </a>
 
-<button class="btn" id="copyBtn">Copy code</button>
+<button class="btn" id="copyBtn">
+Copy code
+</button>
+
+<a class="btn" href="/">
+← Назад
+</a>
 
 </div>
 
 
 {% if is_markdown %}
+
+<div class="container">
 
 <div class="markdown-body">
 
@@ -53,15 +65,23 @@ GitHub
 
 </div>
 
+</div>
+
 {% else %}
+
+<div class="code-container">
 
 <pre><code class="language-{{ language }}">
 
 {% for line in lines %}
-<span class="line"><span class="number">{{ loop.index }}</span>{{ line | e }}</span>
+<span class="line">
+<span class="number">{{ loop.index }}</span>{{ line | e }}
+</span>
 {% endfor %}
 
 </code></pre>
+
+</div>
 
 {% endif %}
 
@@ -72,7 +92,7 @@ GitHub
 hljs.highlightAll();
 </script>
 
-<script src="{{ url_for('static',filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 

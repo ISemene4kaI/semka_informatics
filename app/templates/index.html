@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
 
 <meta charset="UTF-8">
-
 <title>Semka Informatics</title>
 
-<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
+<div class="container">
+
 <header>
 
+<div>
 <h1>Semka Informatics</h1>
-
 <p>Практические работы по программированию</p>
+</div>
 
 <button id="themeToggle">🌙</button>
 
 </header>
 
 
-<section class="stats">
-
+<div class="stats">
 Всего работ: {{ total }}
-
-</section>
+</div>
 
 
 <section class="latest">
@@ -38,9 +38,7 @@
 <ul>
 
 {% for f in latest %}
-
 <li>{{ f.title }}</li>
-
 {% endfor %}
 
 </ul>
@@ -48,7 +46,9 @@
 </section>
 
 
-{% for work,files in works.items() %}
+{% for work, files in works.items() %}
+
+<section class="work">
 
 <h2>Практическая работа {{ work }}</h2>
 
@@ -59,19 +59,12 @@
 <a class="card" href="/view/{{ f.filename }}">
 
 <div class="title">
-
 {{ f.icon }} {{ f.title }}
-
 </div>
 
 <div class="meta">
-
-{{ f.filename }}
-
-<br>
-
+{{ f.filename }} <br>
 {{ f.mtime }}
-
 </div>
 
 </a>
@@ -80,16 +73,18 @@
 
 </div>
 
+</section>
+
 {% endfor %}
 
 
 <footer>
-
 © ISemene4kaI
-
 </footer>
 
-<script src="{{ url_for('static',filename='script.js') }}"></script>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 
