@@ -1,31 +1,37 @@
-.code-container{
-    max-width:1100px;
-    margin:auto;
-    padding:0 24px 40px 24px;
+.code-wrapper {
+    margin-top: 20px;
 }
 
-pre{
-    background:#020617;
-    border-radius:14px;
-    border:1px solid #334155;
-    padding:24px;
-    overflow:auto;
-    font-size:14px;
-    line-height:1.6;
+.code-pre {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 14px;
+    color: var(--code-text);
+    font-family: var(--code-font);
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-x: auto;
+    padding: 24px;
+    white-space: normal;
 }
 
-.line{
-    display:block;
-    white-space:pre;
+.line {
+    align-items: baseline;
+    display: flex;
+    min-height: 1.55em;
 }
 
-.number{
-    display:inline-block;
-    width:40px;
-    color:#64748b;
-    user-select:none;
+.number {
+    color: var(--code-number);
+    flex: 0 0 52px;
+    font-variant-numeric: tabular-nums;
+    padding-right: 14px;
+    text-align: right;
+    user-select: none;
 }
 
-.code{
-    color:#e2e8f0;
+.code {
+    color: var(--code-text);
+    flex: 1 1 auto;
+    white-space: pre;
 }

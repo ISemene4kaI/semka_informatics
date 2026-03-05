@@ -1,99 +1,81 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
-<meta charset="UTF-8">
-<title>{{ filename }}</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
-
+  <meta charset="UTF-8">
+  <title>{{ filename }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
+  {% if is_markdown %}
+  <link
+    id="hljsTheme"
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+  >
+  {% endif %}
 </head>
-
 <body>
+  <div class="container">
+    <div class="file-header">
+      <div>
+        <h1>{{ title }}</h1>
+        <div class="file-name">{{ filename }}</div>
+        <div class="tags">
+          <span class="tag tag-{{ language }}">{{ language }}</span>
+        </div>
+      </div>
+      <div class="file-header-right">
+        <div class="views">👁 {{ views }}</div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+      </div>
+    </div>
 
-<div class="topbar">
+    <div class="buttons">
+      <a class="btn btn-download" href="{{ url_for('download', filename=filename) }}">⬇ Скачать</a>
+      <a
+        class="btn btn-github"
+        href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      <button class="btn btn-copy" id="copyBtn">📋 Copy</button>
+      <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+    </div>
 
-<h2>{{ filename }}</h2>
+    {% if is_markdown %}
+    <div class="markdown-body markdown-container">
+      {{ markdown | safe }}
+    </div>
+    {% else %}
+    <div class="code-wrapper">
+      <pre class="code-pre">{% for line in lines -%}
+<span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
+{%- endfor %}</pre>
+    </div>
+    {% endif %}
 
-<div>
-Просмотров: {{ views }}
-</div>
+    <footer class="footer-island">
+      <div class="footer-inner">
+        <div>© ISemene4kaI</div>
+        <a
+          class="footer-link footer-link-inline"
+          href="https://github.com/ISemene4kaI/semka_informatics"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Repo: github.com/ISemene4kaI/semka_informatics
+        </a>
+      </div>
+    </footer>
+  </div>
 
-</div>
-
-
-<div class="buttons">
-
-<a class="btn" href="/download/{{ filename }}">
-⬇ Скачать
-</a>
-
-<a class="btn"
-href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
-target="_blank">
-
-GitHub
-
-</a>
-
-<button class="btn" id="copyBtn">
-Copy code
-</button>
-
-<a class="btn" href="/">
-← Назад
-</a>
-
-</div>
-
-
-{% if is_markdown %}
-
-<div class="container">
-
-<div class="markdown-body">
-
-{{ markdown | safe }}
-
-</div>
-
-</div>
-
-{% else %}
-
-<div class="code-container">
-
-<pre><code class="language-{{ language }}">
-
-{% for line in lines %}
-<span class="line">
-<span class="number">{{ loop.index }}</span>{{ line | e }}
-</span>
-{% endfor %}
-
-</code></pre>
-
-</div>
-
-{% endif %}
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-<script>
-hljs.highlightAll();
-</script>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
+  {% if is_markdown %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+  {% endif %}
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>
