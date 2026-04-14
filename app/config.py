@@ -35,7 +35,7 @@ class AppVariables:
         "json",
     }
     
-    lang_icons: Dict[str] = {
+    lang_icons: Dict[str, str] = {
         "py": "🐍",
         "cpp": "⚙️",
         "c": "⚙️",
