@@ -4,7 +4,7 @@ import re
 import tempfile
 from datetime import datetime
 from pathlib import Path
-from config import AppConfig, AppPaths, AppVariables
+from .config import AppConfig, AppPaths, AppVariables
 
 import bleach
 import markdown
