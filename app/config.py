@@ -1,6 +1,6 @@
 import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Set, Dict
 
@@ -22,7 +22,7 @@ class AppPaths:
 class AppVariables:
     max_file_bytes: int = 1_000_000
     
-    allowed_extensions: Set[str] = {
+    allowed_extensions: Set[str] = field(default_factory=lambda: {
         "py",
         "js",
         "html",
@@ -33,9 +33,9 @@ class AppVariables:
         "txt",
         "md",
         "json",
-    }
+    })
     
-    lang_icons: Dict[str, str] = {
+    lang_icons: Dict[str, str] = field(default_factory=lambda: {
         "py": "🐍",
         "cpp": "⚙️",
         "c": "⚙️",
@@ -43,6 +43,6 @@ class AppVariables:
         "json": "🧾",
         "md": "📄",
         "txt": "📄",
-    }
+    })
 
     filename_pattern: re.Pattern = re.compile(r"^(\d+)(?:part(\d+))?$")
