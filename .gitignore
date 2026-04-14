@@ -1,0 +1,17 @@
+#Venv
+*venv*/
+
+#Env
+*.env
+!*.env.example
+
+#Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+#Editors
+.idea/
+.vscode/

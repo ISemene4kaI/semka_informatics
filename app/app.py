@@ -3,56 +3,28 @@ import os
 import re
 import tempfile
 from datetime import datetime
+from pathlib import Path
+from config import AppConfig, AppPaths, AppVariables
 
 import bleach
 import markdown
-from flask import Flask, abort, render_template, send_from_directory
+from flask import Flask, abort, render_template, send_from_directory, jsonify
 from werkzeug.utils import safe_join
 
 app = Flask(__name__)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CODE_DIR = os.path.join(BASE_DIR, "code_storage")
-VIEWS_FILE = os.path.join(BASE_DIR, "views.json")
-
-MAX_FILE_BYTES = 1_000_000
-
-ALLOWED_EXTENSIONS = {
-    "py",
-    "js",
-    "html",
-    "css",
-    "cpp",
-    "c",
-    "java",
-    "txt",
-    "md",
-    "json",
-}
-
-LANG_ICONS = {
-    "py": "🐍",
-    "cpp": "⚙️",
-    "c": "⚙️",
-    "js": "📜",
-    "json": "🧾",
-    "md": "📄",
-    "txt": "📄",
-}
-
-FILENAME_PATTERN = re.compile(r"^(\d+)(?:part(\d+))?$")
-
+# ========== Checkers ================
 
 def is_allowed(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in APP_VARIABLES.allowed_extensions
 
 def is_safe_filename(filename):
     return bool(filename) and "/" not in filename and "\\" not in filename and not filename.startswith(".")
 
 def list_allowed_filenames():
-    return [filename for filename in os.listdir(CODE_DIR) if is_allowed(filename)]
+    return [filename for filename in os.listdir(APP_PATHS.codes_dir) if is_allowed(filename)]
 
+# ========== Additional func ================
 
 def get_safe_file_path(filename):
 
@@ -62,7 +34,7 @@ def get_safe_file_path(filename):
     if not is_allowed(filename):
         abort(403)
 
-    path = safe_join(CODE_DIR, filename)
+    path = safe_join(APP_PATHS.codes_dir, filename)
 
     if path is None:
         abort(403)
@@ -73,10 +45,11 @@ def get_safe_file_path(filename):
     return path
 
 
+
 def read_text_file_limited(path):
     size = os.path.getsize(path)
 
-    if size > MAX_FILE_BYTES:
+    if size > APP_VARIABLES.max_file_bytes:
         abort(413)
 
     with open(path, "r", encoding="utf-8", errors="replace") as f:
@@ -85,7 +58,7 @@ def read_text_file_limited(path):
 
 def parse_filename(filename):
     name = filename.rsplit(".", 1)[0]
-    match = FILENAME_PATTERN.match(name)
+    match = APP_VARIABLES.filename_pattern.match(name)
 
     if not match:
         return None, None, name
@@ -102,7 +75,7 @@ def parse_filename(filename):
 
 
 def build_file_entry(filename):
-    path = os.path.join(CODE_DIR, filename)
+    path = os.path.join(APP_PATHS.codes_dir, filename)
     ext = filename.rsplit(".", 1)[1].lower()
     _, _, title = parse_filename(filename)
     mtime = os.path.getmtime(path)
@@ -110,7 +83,7 @@ def build_file_entry(filename):
     return {
         "filename": filename,
         "title": title,
-        "icon": LANG_ICONS.get(ext, "📄"),
+        "icon": APP_VARIABLES.lang_icons.get(ext, "📄"),
         "ext": ext,
         "mtime": datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
         "mtime_raw": mtime,
@@ -124,21 +97,21 @@ def get_latest_files(limit=10):
 
 
 def load_views():
-    if not os.path.exists(VIEWS_FILE):
+    if not os.path.exists(APP_PATHS.views_json):
         return {}
 
     try:
-        with open(VIEWS_FILE, "r", encoding="utf-8") as f:
+        with open(APP_PATHS.views_json, "r", encoding="utf-8") as f:
             return json.load(f)
     except (OSError, ValueError, json.JSONDecodeError):
         return {}
 
 
 def save_views(data):
-    os.makedirs(os.path.dirname(VIEWS_FILE), exist_ok=True)
+    os.makedirs(os.path.dirname(APP_PATHS.views_json), exist_ok=True)
 
     fd, tmp_path = tempfile.mkstemp(
-        dir=os.path.dirname(VIEWS_FILE),
+        dir=os.path.dirname(APP_PATHS.views_json),
         prefix="views_",
         suffix=".tmp",
     )
@@ -147,7 +120,7 @@ def save_views(data):
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
-        os.replace(tmp_path, VIEWS_FILE)
+        os.replace(tmp_path, APP_PATHS.views_json)
     finally:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
@@ -262,7 +235,7 @@ def download(filename):
     path = get_safe_file_path(filename)
 
     return send_from_directory(
-        CODE_DIR,
+        APP_PATHS.codes_dir,
         os.path.basename(path),
         as_attachment=True,
     )
@@ -275,6 +248,24 @@ def updates():
         latest=get_latest_files(),
     )
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    APP_CONFIG = AppConfig(
+        dns=os.getenv("APP_DNS"),
+        host=os.getenv("APP_HOST"),
+        port=int(os.getenv("APP_PORT"))
+    )
+    #APP_PATHS.views_json
+    APP_PATHS = AppPaths(
+        codes_dir=Path(os.getenv("FILES_DIR")),
+        static_dir=Path(os.getenv("STATIC_DIR")),
+        templates_dir=Path(os.getenv("templates_dir")),
+        views_json=Path(os.getenv("VIEWS_FILE"))
+    )
+    
+    APP_VARIABLES = AppVariables()
+    
+    app.run(host=APP_CONFIG.host, port=APP_CONFIG.port)
