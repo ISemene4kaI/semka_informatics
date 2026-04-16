@@ -15,16 +15,16 @@ app = Flask(__name__)
 
 
 APP_CONFIG = AppConfig(
-    dns=os.getenv("APP_DNS"),
-    host=os.getenv("APP_HOST"),
-    port=int(os.getenv("APP_PORT"))
+    dns=os.getenv("APP_DNS", "localhost"),
+    host=os.getenv("APP_HOST", "0.0.0.0"),
+    port=int(os.getenv("APP_PORT", "8000"))
 )
 #APP_PATHS.views_json
 APP_PATHS = AppPaths(
-    codes_dir=Path(os.getenv("FILES_DIR")),
-    static_dir=Path(os.getenv("STATIC_DIR")),
-    templates_dir=Path(os.getenv("TEMPLATES_DIR")),
-    views_json=Path(os.getenv("VIEWS_FILE"))
+    codes_dir=Path(os.getenv("FILES_DIR", "./app/code_storage")),
+    static_dir=Path(os.getenv("STATIC_DIR", "./app/static")),
+    templates_dir=Path(os.getenv("TEMPLATES_DIR", "./app/templates")),
+    views_json=Path(os.getenv("VIEWS_FILE", "./app.views.json"))
 )
 
 APP_VARIABLES = AppVariables()

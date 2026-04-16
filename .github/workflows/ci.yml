@@ -26,7 +26,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run simple test
-        run: python -m tests.test_health
+        run: |
+          python -m tests.test_health
 
   docker:
     runs-on: ubuntu-latest
