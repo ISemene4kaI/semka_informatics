@@ -13,20 +13,39 @@ from werkzeug.utils import safe_join
 
 app = Flask(__name__)
 
+
+APP_CONFIG = AppConfig(
+    dns=os.getenv("APP_DNS"),
+    host=os.getenv("APP_HOST"),
+    port=int(os.getenv("APP_PORT"))
+)
+#APP_PATHS.views_json
+APP_PATHS = AppPaths(
+    codes_dir=Path(os.getenv("FILES_DIR")),
+    static_dir=Path(os.getenv("STATIC_DIR")),
+    templates_dir=Path(os.getenv("TEMPLATES_DIR")),
+    views_json=Path(os.getenv("VIEWS_FILE"))
+)
+
+APP_VARIABLES = AppVariables()
+
 # ========== Checkers ================
 
 def is_allowed(filename):
+    global APP_VARIABLES
     return "." in filename and filename.rsplit(".", 1)[1].lower() in APP_VARIABLES.allowed_extensions
 
 def is_safe_filename(filename):
     return bool(filename) and "/" not in filename and "\\" not in filename and not filename.startswith(".")
 
 def list_allowed_filenames():
+    global APP_PATHS
     return [filename for filename in os.listdir(APP_PATHS.codes_dir) if is_allowed(filename)]
 
 # ========== Additional func ================
 
 def get_safe_file_path(filename):
+    global APP_PATHS
 
     if not is_safe_filename(filename):
         abort(403)
@@ -47,6 +66,7 @@ def get_safe_file_path(filename):
 
 
 def read_text_file_limited(path):
+    global APP_VARIABLES
     size = os.path.getsize(path)
 
     if size > APP_VARIABLES.max_file_bytes:
@@ -57,6 +77,7 @@ def read_text_file_limited(path):
 
 
 def parse_filename(filename):
+    global APP_VARIABLES
     name = filename.rsplit(".", 1)[0]
     match = APP_VARIABLES.filename_pattern.match(name)
 
@@ -75,6 +96,7 @@ def parse_filename(filename):
 
 
 def build_file_entry(filename):
+    global APP_PATHS, APP_VARIABLES
     path = os.path.join(APP_PATHS.codes_dir, filename)
     ext = filename.rsplit(".", 1)[1].lower()
     _, _, title = parse_filename(filename)
@@ -97,6 +119,7 @@ def get_latest_files(limit=10):
 
 
 def load_views():
+    global APP_PATHS
     if not os.path.exists(APP_PATHS.views_json):
         return {}
 
@@ -108,6 +131,7 @@ def load_views():
 
 
 def save_views(data):
+    global APP_PATHS
     os.makedirs(os.path.dirname(APP_PATHS.views_json), exist_ok=True)
 
     fd, tmp_path = tempfile.mkstemp(
@@ -253,19 +277,4 @@ def health():
     return {"status": "ok"}
 
 if __name__ == "__main__":
-    APP_CONFIG = AppConfig(
-        dns=os.getenv("APP_DNS"),
-        host=os.getenv("APP_HOST"),
-        port=int(os.getenv("APP_PORT"))
-    )
-    #APP_PATHS.views_json
-    APP_PATHS = AppPaths(
-        codes_dir=Path(os.getenv("FILES_DIR")),
-        static_dir=Path(os.getenv("STATIC_DIR")),
-        templates_dir=Path(os.getenv("templates_dir")),
-        views_json=Path(os.getenv("VIEWS_FILE"))
-    )
-    
-    APP_VARIABLES = AppVariables()
-    
     app.run(host=APP_CONFIG.host, port=APP_CONFIG.port)
