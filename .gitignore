@@ -1,10 +1,6 @@
 #Venv
 *venv*/
 
-#Env
-*.env
-!*.env.example
-
 #Cache
 __pycache__/
 *.pyc
