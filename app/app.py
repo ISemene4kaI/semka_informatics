@@ -276,5 +276,10 @@ def updates():
 def health():
     return {"status": "ok"}
 
+@app.get("/ready")
+def health():
+    return {"status": "ok"}
+
+
 if __name__ == "__main__":
     app.run(host=APP_CONFIG.host, port=APP_CONFIG.port)
