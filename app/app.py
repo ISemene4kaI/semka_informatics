@@ -277,7 +277,7 @@ def health():
     return {"status": "ok"}
 
 @app.get("/ready")
-def health():
+def ready():
     return {"status": "ok"}
 
 
