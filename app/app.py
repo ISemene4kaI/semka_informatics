@@ -24,7 +24,7 @@ APP_PATHS = AppPaths(
     codes_dir=Path(os.getenv("FILES_DIR", "./app/code_storage")),
     static_dir=Path(os.getenv("STATIC_DIR", "./app/static")),
     templates_dir=Path(os.getenv("TEMPLATES_DIR", "./app/templates")),
-    views_json=Path(os.getenv("VIEWS_FILE", "./app.views.json"))
+    views_json=Path(os.getenv("VIEWS_FILE", "./app/views.json"))
 )
 
 APP_VARIABLES = AppVariables()
