@@ -60,7 +60,7 @@ curl http://127.0.0.1:5000
 
 Будем всё делать в обычной для nginx директории
 ```bash
-sudo nano /etc/nginx/sites-available/semka_informatics
+sudo nano /etc/nginx/sites-available/isemene4kai.ru
 ```
 
 Создаем конфиг Nginx в редакторе который открылся

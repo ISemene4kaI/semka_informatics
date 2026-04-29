@@ -1,0 +1,13 @@
+#Venv
+*venv*/
+
+#Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+#Editors
+.idea/
+.vscode/
