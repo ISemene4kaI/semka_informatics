@@ -2,23 +2,22 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ filename }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}">
-  {% if is_markdown %}
   <link
     id="hljsTheme"
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
   >
-  {% endif %}
 </head>
 <body>
   <div class="container">
     <div class="file-header">
       <div>
         <h1>{{ title }}</h1>
-        <div class="file-name">{{ filename }}</div>
+        <div class="file-name">{{ filename }} · {{ size }} · изменён {{ modified }}</div>
         <div class="tags">
           <span class="tag tag-{{ language }}">{{ language }}</span>
         </div>
@@ -39,7 +38,7 @@
       >
         GitHub
       </a>
-      <button class="btn btn-copy" id="copyBtn">📋 Copy</button>
+      <button class="btn btn-copy" id="copyBtn" type="button">📋 Копировать</button>
       <a class="btn btn-back" href="{{ url_for('pages.index') }}">← Назад</a>
     </div>
 
@@ -49,11 +48,20 @@
     </div>
     {% else %}
     <div class="code-wrapper">
-      <pre class="code-pre">{% for line in lines -%}
-<span class="line"><span class="number">{{ loop.index }}</span><span class="code">{{ line | e }}</span></span>
+      <pre class="code-pre" data-language="{{ language }}">{% for line in content.splitlines() -%}
+<span class="line" id="L{{ loop.index }}"><a class="number" href="#L{{ loop.index }}" aria-label="Строка {{ loop.index }}">{{ loop.index }}</a><span class="code language-{{ language }}">{{ line | e }}</span></span>
 {%- endfor %}</pre>
     </div>
     {% endif %}
+
+    <nav class="file-navigation" aria-label="Навигация между файлами">
+      {% if previous_filename %}
+      <a class="btn btn-back" href="{{ url_for('files.view_file', filename=previous_filename) }}">← {{ previous_filename }}</a>
+      {% else %}<span></span>{% endif %}
+      {% if next_filename %}
+      <a class="btn btn-open" href="{{ url_for('files.view_file', filename=next_filename) }}">{{ next_filename }} →</a>
+      {% endif %}
+    </nav>
 
     <footer class="footer-island">
       <div class="footer-inner">
@@ -70,12 +78,7 @@
     </footer>
   </div>
 
-  {% if is_markdown %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    hljs.highlightAll();
-  </script>
-  {% endif %}
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

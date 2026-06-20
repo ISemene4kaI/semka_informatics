@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Статистика — Semka Informatics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header class="hero hero-island">
+      <div>
+        <h1>Статистика</h1>
+        <p class="subtitle">Всего просмотров: {{ total_views }}</p>
+      </div>
+      <div class="hero-actions">
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+        <a class="btn btn-back" href="{{ url_for('pages.index') }}">← Назад</a>
+      </div>
+    </header>
+    <div class="updates-list">
+      {% for entry in entries %}
+      <a class="update-card" href="{{ url_for('files.view_file', filename=entry.filename) }}">
+        <span>{{ entry.icon }} {{ entry.title }}</span>
+        <strong>👁 {{ entry.views }}</strong>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

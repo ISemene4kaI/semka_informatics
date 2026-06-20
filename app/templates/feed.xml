@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Semka Informatics — обновления</title>
+    <link>{{ url_for('pages.index', _external=True) }}</link>
+    <description>Последние практические работы</description>
+    {% for file in files %}
+    <item>
+      <title>{{ file.title }}</title>
+      <link>{{ url_for('files.view_file', filename=file.filename, _external=True) }}</link>
+      <guid>{{ url_for('files.view_file', filename=file.filename, _external=True) }}</guid>
+      <description>{{ file.filename }} · {{ file.size_human }}</description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

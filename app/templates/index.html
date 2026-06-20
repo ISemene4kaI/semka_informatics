@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Semka Informatics</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="alternate" type="application/rss+xml" title="Обновления" href="{{ url_for('pages.feed') }}">
 </head>
 <body>
   <div class="container">
@@ -11,14 +13,35 @@
       <div class="hero-copy">
         <h1>Semka Informatics</h1>
         <p class="subtitle">Практические работы по программированию</p>
-        <div class="hero-stats">📚 Всего работ: {{ total }}</div>
+        <div class="hero-stats">📚 Найдено файлов: {{ total }}</div>
       </div>
-      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+      <div class="hero-actions">
+        <a class="text-link" href="{{ url_for('pages.stats') }}">Статистика</a>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
+      </div>
     </header>
 
-    <div class="updates-link">
-      <a href="{{ url_for('pages.updates') }}">📜 Последние обновления →</a>
-    </div>
+    <form class="filters" method="get">
+      <label class="search-field">
+        <span class="sr-only">Поиск работ</span>
+        <input name="q" type="search" value="{{ query }}" placeholder="Поиск по названию или номеру…">
+      </label>
+      <select name="lang" aria-label="Язык программирования">
+        <option value="">Все языки</option>
+        {% for language in languages %}
+        <option value="{{ language }}"{% if language == selected_language %} selected{% endif %}>{{ language | upper }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-open" type="submit">Найти</button>
+      {% if query or selected_language %}
+      <a class="btn btn-back" href="{{ url_for('pages.index') }}">Сбросить</a>
+      {% endif %}
+    </form>
+
+    <nav class="quick-links" aria-label="Дополнительная навигация">
+      <a href="{{ url_for('pages.updates') }}">📜 Последние обновления</a>
+      <a href="{{ url_for('pages.feed') }}">RSS</a>
+    </nav>
 
     {% for work, files in works.items() %}
     <section class="work">
@@ -31,12 +54,16 @@
             <span class="tag tag-{{ f.ext }}">{{ f.ext }}</span>
           </div>
           <div class="card-meta">Название файла: {{ f.filename }}</div>
-          <div class="card-date">🕒 {{ f.mtime }}</div>
+          <div class="card-date">🕒 {{ f.mtime }} · {{ f.size_human }}</div>
         </a>
         {% endfor %}
       </div>
     </section>
     {% endfor %}
+
+    {% if not works %}
+    <div class="empty-state">Ничего не найдено. Попробуйте изменить запрос или фильтр.</div>
+    {% endif %}
 
     <footer class="footer-island">
       <div class="footer-inner">

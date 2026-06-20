@@ -13,22 +13,25 @@
 - ⬇️ Скачивание файлов
 - 🔗 Быстрая ссылка на GitHub
 - 📅 Отображение даты изменения
+- 🔎 Поиск и фильтрация по языку
+- 📊 Статистика просмотров и RSS-лента обновлений
+- ↔️ Навигация между соседними работами и ссылки на строки
 - 🧠 Автоматическое преобразование названий:
   
   `1part2.py → Практическая работа 1 часть 2`
 
-- 🐳 Docker-ready
-- 🔐 Поддержка HTTPS через Nginx + Let's Encrypt
+- 🐳 Docker-ready, с liveness/readiness проверками
+- ☸️ Развёртывание в k3s через Argo CD и Traefik
 
 ---
 
 ## 🛠 Технологии
 
-- Python 3.11
+- Python 3.12
 - Flask
 - Gunicorn
-- Nginx
-- Docker & Docker Compose
+- Docker
+- k3s, Traefik и Argo CD
 - Highlight.js
 
 ---
@@ -36,4 +39,19 @@
 ## 📦 Запуск локально
 
 ```bash
-docker compose up -d --build
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt -r requirements-dev.txt
+.venv/bin/python -m app.app
+```
+
+## Проверки
+
+```bash
+.venv/bin/pytest
+.venv/bin/ruff check .
+```
+
+Production-развёртывание хранится в репозитории
+[`ISemene4kaI/sites_kubernetes`](https://github.com/ISemene4kaI/sites_kubernetes):
+Argo CD синхронизирует Helm values, Traefik принимает трафик, а счётчики
+просмотров сохраняются на PVC в `/data`.

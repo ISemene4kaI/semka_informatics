@@ -28,6 +28,16 @@
     padding-right: 14px;
     text-align: right;
     user-select: none;
+    text-decoration: none;
+}
+
+.line:target {
+    background: rgba(96, 165, 250, 0.14);
+}
+
+.code.hljs {
+    background: transparent;
+    padding: 0;
 }
 
 .code {

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ошибка {{ error.code }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container error-page">
+    <div class="hero hero-island">
+      <div>
+        <h1>Ошибка {{ error.code }}</h1>
+        <p class="subtitle">{{ error.description }}</p>
+      </div>
+      <a class="btn btn-back" href="{{ url_for('pages.index') }}">На главную</a>
+    </div>
+  </main>
+</body>
+</html>

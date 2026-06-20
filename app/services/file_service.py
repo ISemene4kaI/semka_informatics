@@ -24,11 +24,23 @@ def is_safe_filename(filename: str) -> bool:
 
 
 def list_allowed_filenames() -> list[str]:
-    return [
+    filenames = [
         filename
         for filename in os.listdir(APP_PATHS.codes_dir)
         if is_allowed(filename)
+        and os.path.isfile(os.path.join(APP_PATHS.codes_dir, filename))
     ]
+    return sorted(filenames, key=filename_sort_key)
+
+
+def filename_sort_key(filename: str) -> tuple:
+    work, part, _ = parse_filename(filename)
+    return (
+        work is None,
+        work or 0,
+        int(part or 0),
+        filename.casefold(),
+    )
 
 
 def get_safe_file_path(filename: str) -> str:
@@ -87,10 +99,32 @@ def build_file_entry(filename: str) -> dict:
         "ext": ext,
         "mtime": datetime.fromtimestamp(mtime).strftime("%d.%m.%Y %H:%M"),
         "mtime_raw": mtime,
+        "size": os.path.getsize(path),
+        "size_human": format_file_size(os.path.getsize(path)),
     }
+
+
+def format_file_size(size: int) -> str:
+    if size < 1024:
+        return f"{size} Б"
+    if size < 1024 * 1024:
+        return f"{size / 1024:.1f} КБ"
+    return f"{size / (1024 * 1024):.1f} МБ"
 
 
 def get_latest_files(limit: int = 10) -> list[dict]:
     files = [build_file_entry(filename) for filename in list_allowed_filenames()]
     files.sort(key=lambda item: item["mtime_raw"], reverse=True)
     return files[:limit]
+
+
+def get_file_neighbors(filename: str) -> tuple[str | None, str | None]:
+    filenames = list_allowed_filenames()
+    try:
+        index = filenames.index(filename)
+    except ValueError:
+        return None, None
+
+    previous_filename = filenames[index - 1] if index > 0 else None
+    next_filename = filenames[index + 1] if index < len(filenames) - 1 else None
+    return previous_filename, next_filename
