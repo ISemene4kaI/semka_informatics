@@ -1,5 +1,8 @@
+#Environments
+.env
+
 #Venv
-*venv*/
+[Vv]env/
 
 #Cache
 __pycache__/
