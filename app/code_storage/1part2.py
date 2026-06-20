@@ -1,7 +1,7 @@
 # Практическая работа 1 (часть B)
 # Задание №9
 
-from math import *
+from math import cos
 
 t = 0
 s1 = 5

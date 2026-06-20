@@ -2,7 +2,7 @@
 .env
 
 #Venv
-[Vv]env/
+?[Vv]env/
 
 #Cache
 __pycache__/
@@ -10,6 +10,7 @@ __pycache__/
 *.pyo
 *.pyd
 .pytest_cache/
+app/views.json.lock
 
 #Editors
 .idea/

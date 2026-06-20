@@ -30,7 +30,7 @@
     </div>
 
     <div class="buttons">
-      <a class="btn btn-download" href="{{ url_for('download', filename=filename) }}">⬇ Скачать</a>
+      <a class="btn btn-download" href="{{ url_for('files.download', filename=filename) }}">⬇ Скачать</a>
       <a
         class="btn btn-github"
         href="https://github.com/ISemene4kaI/semka_informatics/tree/main/app/code_storage/{{ filename }}"
@@ -40,7 +40,7 @@
         GitHub
       </a>
       <button class="btn btn-copy" id="copyBtn">📋 Copy</button>
-      <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+      <a class="btn btn-back" href="{{ url_for('pages.index') }}">← Назад</a>
     </div>
 
     {% if is_markdown %}

@@ -14,7 +14,7 @@
       </div>
       <div class="hero-actions">
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему">🌙</button>
-        <a class="btn btn-back" href="{{ url_for('index') }}">← Назад</a>
+        <a class="btn btn-back" href="{{ url_for('pages.index') }}">← Назад</a>
       </div>
     </header>
 
@@ -29,7 +29,7 @@
             <span class="update-file">Название файла: {{ file.filename }}</span>
           </div>
         </div>
-        <a class="btn btn-open" href="{{ url_for('view_file', filename=file.filename) }}">
+        <a class="btn btn-open" href="{{ url_for('files.view_file', filename=file.filename) }}">
           Открыть →
         </a>
       </div>
