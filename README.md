@@ -51,6 +51,18 @@ python -m venv .venv
 .venv/bin/ruff check .
 ```
 
+## Запуск машинных решений
+
+Численные работы используют NumPy и Matplotlib. Они вынесены из production-
+зависимостей сайта, чтобы не увеличивать контейнер в k3s:
+
+```bash
+.venv/bin/pip install -r requirements-solutions.txt
+.venv/bin/python app/code_storage/9part2.py
+.venv/bin/python app/code_storage/11part1.py
+.venv/bin/python app/code_storage/11part2.py path/to/image.jpg
+```
+
 Production-развёртывание хранится в репозитории
 [`ISemene4kaI/sites_kubernetes`](https://github.com/ISemene4kaI/sites_kubernetes):
 Argo CD синхронизирует Helm values, Traefik принимает трафик, а счётчики
