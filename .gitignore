@@ -16,3 +16,4 @@ app/views.json.lock
 #Editors
 .idea/
 .vscode/
+.test
